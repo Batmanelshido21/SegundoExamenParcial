@@ -73,8 +73,8 @@ public class UsuarioWS {
             @FormParam("numeroCelular") String numeroCelular,
             @FormParam("fechaNacimiento") Date fechaNacimiento,
             @FormParam("password") String password){
-        
-        Usuario usuario = new Usuario();
+         Usuario usuario = new Usuario();
+        if(!validarExistencia(numeroCelular)){
         usuario.setNombre(nombre);
         usuario.setApellidoP(apellidoP);
         usuario.setApellidoM(apellidoM);
@@ -92,8 +92,26 @@ public class UsuarioWS {
                 conexion.close();
             }
         }
-        return usuario;
+        }
         
+        return usuario;
+    }
+    
+    public boolean validarExistencia(String telefono){
+         SqlSession conexion = MyBatisUtil.getSession();
+         Usuario usuario = new Usuario();
+        if(conexion != null){
+            try{
+                usuario = conexion.selectOne("Usuario.validarExistencia",telefono);
+                return false;
+            }catch(Exception ex){
+               return true;
+            }finally{
+                String j = conexion.toString();
+                conexion.close();
+            }
+        }
+        return true;
     }
     
     @POST

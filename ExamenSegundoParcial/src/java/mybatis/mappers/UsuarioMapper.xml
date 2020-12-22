@@ -26,6 +26,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         usuario.fechaNacimiento,
         usuario.password
         FROM usuario WHERE usuario.numeroCelular = #{numeroCelular} and usuario.password = #{password}
+    </select> 
+    
+     <select id="validarExistencia" resultType="pojos.Usuario" parameterType="string">
+        SELECT
+        usuario.idUsuario,
+        usuario.nombre,
+        usuario.apellidoP,
+        usuario.apellidoM,
+        usuario.numeroCelular,
+        usuario.fechaNacimiento,
+        usuario.password
+        FROM usuario WHERE usuario.numeroCelular = #{numeroCelular}
     </select>  
     
     <insert id="registrarUsuario" parameterType="pojos.Usuario">
