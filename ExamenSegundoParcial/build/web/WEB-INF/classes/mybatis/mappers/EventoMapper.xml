@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtdmybatis-3-mapper.dtd">
+
+<mapper namespace="Evento">
+    <select id="getAllEventos" resultType="pojos.Evento">
+        SELECT
+        evento.descripcion,
+        evento.fechaInicio,
+        evento.fechaTermino,
+        evento.lugar,
+        evento.Usuario_idUsuario
+        FROM evento
+    </select> 
+    
+    
+    <insert id="registrarEvento" parameterType="pojos.Evento">
+        INSERT INTO evento (descripcion,fechaInicio,fechaTermino,lugar,Usuario_idUsuario)
+        VALUES(#{descripcion},#{fechaInicio},#{fechaTermino},#{lugar},#{Usuario_idUsuario})        
+    </insert>
+    
+    <select id="getEventosUsuario" resultType="pojos.Evento" parameterType="int">
+        SELECT
+        evento.descripcion,
+        evento.fechaInicio,
+        evento.fechaTermino,
+        evento.lugar,
+        evento.Usuario_idUsuario
+        FROM evento WHERE evento.Usuario_idUsuario = #{Usuario_idUsuario}
+    </select>
+    
+</mapper>
