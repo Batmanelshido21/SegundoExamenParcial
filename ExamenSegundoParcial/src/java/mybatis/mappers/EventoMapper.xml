@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         evento.fechaTermino,
         evento.lugar,
         evento.Usuario_idUsuario
-        FROM evento WHERE evento.Usuario_idUsuario = #{Usuario_idUsuario}
+        FROM evento WHERE evento.Usuario_idUsuario = #{Usuario_idUsuario} ORDER BY evento.fechaInicio DESC
     </select>
     
 </mapper>
