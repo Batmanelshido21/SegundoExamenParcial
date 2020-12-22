@@ -11,9 +11,11 @@ import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import static javax.ws.rs.HttpMethod.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
@@ -109,5 +111,59 @@ public class EventoWS {
         }
         return evento;
         
+    }
+    
+    @DELETE
+    @Path("eliminarEvento")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Evento eliminarEvento(
+            @FormParam("idEvento") Integer idEvento){
+        Evento evento = new Evento();
+        SqlSession conn = MyBatisUtil.getSession();
+         try {
+             evento.setIdEvento(idEvento);
+            conn.delete("Evento.eliminarEvento",evento);
+            conn.commit();
+            conn.close();
+            return evento;
+        } catch (Exception ex) {
+            
+        } finally {
+            conn.close();
+        }
+        
+        return evento;
+    }
+    
+    @PUT
+    @Path("editarEvento")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Evento editarEvento(
+            @FormParam("idEvento") Integer idEvento,
+            @FormParam("descripcion") String descripcion,
+            @FormParam("fechaInicio") Timestamp fechaInicio,
+            @FormParam("fechaTermino") Timestamp fechaTermino,
+            @FormParam("lugar") String lugar) {
+        
+        SqlSession conn = MyBatisUtil.getSession();
+         Evento evento = new Evento();
+         evento.setDescripcion(descripcion);
+         evento.setFechaInicio(fechaInicio);
+         evento.setFechaTermino(fechaTermino);
+         evento.setLugar(lugar);
+         evento.setIdEvento(idEvento);
+
+
+        try {
+            conn.update("Evento.editarEvento", evento);
+            conn.commit();
+            return evento;
+        } catch (Exception ex) {
+            
+        } finally {
+            conn.close();
+        }
+        
+        return evento;
     }
 }

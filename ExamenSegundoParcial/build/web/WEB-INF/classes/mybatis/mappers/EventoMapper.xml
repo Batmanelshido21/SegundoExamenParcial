@@ -30,4 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM evento WHERE evento.Usuario_idUsuario = #{Usuario_idUsuario} ORDER BY evento.fechaInicio DESC
     </select>
     
+    <update id="editarEvento" parameterType="pojos.Evento">
+        UPDATE evento SET descripcion = #{descripcion}, fechaInicio = #{fechaInicio}, fechaTermino = #{fechaTermino}, lugar = #{lugar}
+        WHERE idEvento = #{idEvento}
+    </update>
+    
+    <delete id = "eliminarEvento" parameterType = "int">
+      DELETE from evento WHERE idEvento = #{idEvento};
+   </delete>
+    
 </mapper>

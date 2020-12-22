@@ -24,6 +24,8 @@ public class Evento {
     private String Lugar;
     
     private Integer Usuario_idUsuario;
+    
+    private Integer idEvento;
 
     public Evento() {
     }
@@ -34,6 +36,14 @@ public class Evento {
         this.fechaTermino = fechaTermino;
         this.Lugar = Lugar;
         this.Usuario_idUsuario = Usuario_idUsuario;
+    }
+
+    public Integer getIdEvento() {
+        return idEvento;
+    }
+
+    public void setIdEvento(Integer idEvento) {
+        this.idEvento = idEvento;
     }
 
     public String getDescripcion() {
