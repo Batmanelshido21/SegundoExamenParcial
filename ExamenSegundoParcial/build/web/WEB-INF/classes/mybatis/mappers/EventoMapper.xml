@@ -22,6 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <select id="getEventosUsuario" resultType="pojos.Evento" parameterType="int">
         SELECT
+        evento.idEvento,
         evento.descripcion,
         evento.fechaInicio,
         evento.fechaTermino,
@@ -35,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE idEvento = #{idEvento}
     </update>
     
-    <delete id = "eliminarEvento" parameterType = "int">
+    <delete id = "eliminarEvento" parameterType = "pojos.Evento">
       DELETE from evento WHERE idEvento = #{idEvento};
    </delete>
     
