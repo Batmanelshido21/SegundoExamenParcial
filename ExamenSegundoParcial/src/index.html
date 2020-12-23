@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<!--
+ Copyright (c) 2014, 2020, Oracle and/or its affiliates.
+ Licensed under The Universal Permissive License (UPL), Version 1.0
+ as shown at https://oss.oracle.com/licenses/upl/
+ -->
+
+<!-- ************************ IMPORTANT INFORMATION ************************************
+  This web basic template is provided as an example of how to configure
+  a JET web application.  It contains the Oracle JET framework and a default
+  requireJS configuration file to show how JET can be setup in a common application.
+  This project template can be used in conjunction with demo code from the JET
+  website to test JET component behavior and interactions.
+
+  Any CSS styling with the prefix "demo-" is for demonstration only and is not
+  provided as part of the JET framework.
+
+  Please see the demos under Cookbook/Patterns/App Shell: Web and the CSS documentation
+  under Support/API Docs/Non-Component Styling on the JET website for more information on how to use 
+  the best practice patterns shown in this template.
+
+  Aria Landmark role attributes are added to the different sections of the application
+  for accessibility compliance. If you change the type of content for a specific
+  section from what is defined, you should also change the role value for that
+  section to represent the appropriate content type.
+  ***************************** IMPORTANT INFORMATION ************************************ -->
+<html lang="en-us">
+
+<head>
+  <title>Oracle JET Starter Template - Web Basic</title>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
+  <link rel="icon" href="css/images/favicon.ico" type="image/x-icon" />
+
+  <!-- This is the main css file for the default theme -->
+  <!-- injector:theme -->
+  <link rel="stylesheet" href="css/libs/oj/v9.2.0/redwood/oj-redwood-min.css" type="text/css" />
+  <!-- endinjector -->
+  <!-- This contains icon fonts used by the starter template -->
+  <link rel="stylesheet" href="css/demo-alta-site-min.css" type="text/css" />
+  <link rel="stylesheet" id="uxiconFont"
+    href="https://static.oracle.com/cdn/fnd/gallery/2010.0.0/images/iconfont/ojuxIconFont.min.css">
+
+  <!-- This is where you would add any app specific styling -->
+  <link rel="stylesheet" href="css/app.css" type="text/css" />
+
+</head>
+
+<body class="oj-web-applayout-body">
+  <div id="globalBody" class="oj-web-applayout-page">
+    <!--
+         ** Oracle JET V9.2.0 web application header pattern.
+         ** Please see the demos under Cookbook/Patterns/App Shell: Web
+         ** and the CSS documentation under Support/API Docs/Non-Component Styling
+         ** on the JET website for more information on how to use this pattern.
+      -->
+    <header role="banner" class="oj-web-applayout-header">
+      <div class="oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center">
+        <div class="oj-flex-bar-middle oj-sm-align-items-baseline">
+          <span role="img" class="oj-icon demo-oracle-icon" title="Oracle Logo" alt="Oracle Logo"></span>
+          <h1 class="oj-sm-only-hide oj-web-applayout-header-title" title="Application Name">
+            <oj-bind-text value="[[appName]]"></oj-bind-text>
+          </h1>
+        </div>
+        <div class="oj-flex-bar-end">
+          <!-- Responsive Toolbar -->
+          <oj-toolbar>
+            <oj-menu-button id="userMenu" display="[[smScreen() ? 'icons' : 'all']]" chroming="borderless">
+              <span>
+                <oj-bind-text value="[[userLogin]]"></oj-bind-text>
+              </span>
+              <span slot="endIcon"
+                :class="[[{'oj-icon demo-appheader-avatar': smScreen(), 'oj-component-icon oj-button-menu-dropdown-icon': !smScreen()}]]"></span>
+              <oj-menu id="menu1" slot="menu">
+                <oj-option id="pref" value="pref">Preferences</oj-option>
+                <oj-option id="help" value="help">Help</oj-option>
+                <oj-option id="about" value="about">About</oj-option>
+                <oj-option id="out" value="out">Sign Out</oj-option>
+              </oj-menu>
+            </oj-menu-button>
+          </oj-toolbar>
+        </div>
+      </div>
+    </header>
+    <div role="main" class="oj-web-applayout-max-width oj-web-applayout-content">
+      <div id="tablaWrapper" style="width: 1px; min-width: 100%;">
+
+        <oj-table id='tabla' aria-label='Tabla de prueba' data='[[dataprovider]]' scroll-policy='loadMoreOnScroll'
+          scroll-policy-options='{"fetchSize": 10}' columns='[{"headerText": "Descripcion", 
+                                                   "field": "descripcion"},
+                                                  {"headerText": "Fecha de inicio", 
+                                                   "field": "fechaInicio"},
+                                                   {"headerText": "Fecha de termino", 
+                                                   "field": "fechaTermino"},
+                                                   {"headerText": "Lugar", 
+                                                   "field": "lugar"}]' style='width: 100%; height: 100px;'>
+          <oj-menu slot="contextMenu" on-oj-action="[[myActionFunction]]" aria-label="Employee Edit">
+            <oj-option value="My First Item">Editar</oj-option>
+            <oj-option value="My Other Item">Eliminar</oj-option>
+        </oj-table>
+      </div>
+      <div id="dialogWrapper">
+        <oj-dialog style="display:none" id="modalDialog1" dialog-title="Inicio de sesión" modality="modal"
+          position.my.horizontal="center" position.my.vertical="center" position.at.horizontal="center"
+          position.at.vertical="center" position.of="window">
+          <div slot="body">
+            <oj-form-layout id='formLayoutOptions'>
+              <oj-validation-group id="tracker" valid="{{groupValid}}">
+                <oj-input-text id="telefono" value="{{var_tel}}" required="true" label-hint="telefono"></oj-input-text>
+                <oj-input-password id="contra" value="{{var_contra}}" required="true" label-hint="contraseña">
+                </oj-input-password>
+              </oj-validation-group>
+            </oj-form-layout>
+          </div>
+          <div slot="footer">
+            <oj-button id="okButton" on-oj-action="[[abrirRegistroDeUsuario]]">Registrarse</oj-button>
+            <oj-button id="ok" on-oj-action="[[submit]]">Entrar</oj-button>
+          </div>
+        </oj-dialog>
+        <oj-button id="buttonOpener" class="oj-web-applayout-max-width oj-web-applayout-content"
+          on-oj-action="[[open]]">
+          Abrir Login
+        </oj-button>
+        <oj-button id="buttonOpener" class="oj-web-applayout-max-width oj-web-applayout-content"
+        on-oj-action="[[abrirRegistroEv]]">
+        Registrar Evento
+      </oj-button>
+      </div>
+      <div id="dialogWrapper2">
+        <oj-dialog style="display:none" id="modalDialog2" dialog-title="Registro de cuenta" modality="modal"
+          position.my.horizontal="center" position.my.vertical="center" position.at.horizontal="center"
+          position.at.vertical="center" position.of="window">
+          <div slot="body">
+            <oj-form-layout id='formLayoutOptions'>
+              <oj-validation-group id="tracker" valid="{{groupValid}}">
+                <oj-input-text required="true" value="{{var_nom}}" label-hint="nombre"></oj-input-text>
+                <oj-input-text required="true" value="{{var_Am}}" label-hint="apellido materno"></oj-input-text>
+                <oj-input-text required="true" value="{{var_Ap}}" label-hint="apellido paterno"></oj-input-text>
+                <oj-input-text required="true" value="{{var_tele}}" label-hint="número celular"></oj-input-text>
+                <oj-input-date required="true" value="{{var_fecha}}" label-hint="Fecha de Nacimiento"></oj-input-date>
+                <oj-input-password required="true" value="{{var_pass}}" label-hint="contraseña"></oj-input-password>
+              </oj-validation-group>
+            </oj-form-layout>
+          </div>
+          <div slot="footer">
+            <oj-button id="okk" on-oj-action="[[regresar]]">Cancelar</oj-button>
+            <oj-button id="okButn" on-oj-action="[[registrarCuenta]]">Aceptar</oj-button>
+          </div>
+        </oj-dialog>
+      </div>
+      <div id="dialogWrapper3">
+        <oj-dialog style="display:none" id="modalDialog3" dialog-title="Registro de evento" modality="modal"
+          position.my.horizontal="center" position.my.vertical="center" position.at.horizontal="center"
+          position.at.vertical="center" position.of="window">
+          <div slot="body">
+            <oj-form-layout id='formLayoutOptions'>
+              <oj-validation-group id="tracker" valid="{{groupValid}}">
+                <oj-input-text required="true" value="{{var_des}}" label-hint="Descripcion"></oj-input-text>
+                <oj-input-date required="true" value="{{var_feI}}" label-hint="Fecha de inicio"></oj-input-date>
+                <oj-input-date required="true" value="{{var_feT}}" label-hint="Fecha de termino"></oj-input-date>
+                <oj-input-text required="true" value="{{var_lug}}" label-hint="lugar"></oj-input-text>
+              </oj-validation-group>
+            </oj-form-layout>
+          </div>
+          <div slot="footer">
+            <oj-button id="okh" on-oj-action="[[cancelar]]">Cancelar</oj-button>
+            <oj-button id="okBnhh" on-oj-action="[[registrarEv]]">Aceptar</oj-button>
+          </div>
+        </oj-dialog>
+      </div>
+    </div>
+    <footer class="oj-web-applayout-footer" role="contentinfo">
+      <div class="oj-web-applayout-footer-item oj-web-applayout-max-width">
+        <ul>
+          <oj-bind-for-each data="[[footerLinks]]">
+            <template>
+              <li>
+                <a :id="[[$current.data.linkId]]" :href="[[$current.data.linkTarget]]">
+                  <oj-bind-text value="[[$current.data.name]]"></oj-bind-text>
+                </a>
+              </li>
+            </template>
+          </oj-bind-for-each>
+        </ul>
+      </div>
+      <div class="oj-web-applayout-footer-item oj-web-applayout-max-width oj-text-secondary-color oj-text-sm">
+      </div>
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="js/libs/require/require.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>
