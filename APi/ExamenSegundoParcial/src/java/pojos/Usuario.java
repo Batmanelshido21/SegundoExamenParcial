@@ -12,29 +12,40 @@ import java.sql.Date;
  * @author javie
  */
 public class Usuario {
-    
+
+    private int idUsuario;
+
     private String nombre;
-    
+
     private String apellidoP;
-    
+
     private String apellidoM;
-    
+
     private String numeroCelular;
-    
+
     private Date fechaNacimiento;
-    
+
     private String password;
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellidoP, String apellidoM, String numeroCelular, Date fechaNacimiento, String password) {
+    public Usuario(int idUsuario, String nombre, String apellidoP, String apellidoM, String numeroCelular, Date fechaNacimiento, String password) {
+        this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
         this.numeroCelular = numeroCelular;
         this.fechaNacimiento = fechaNacimiento;
         this.password = password;
+    }
+
+    public int getUsuario_idUsuario() {
+        return idUsuario;
+    }
+
+    public void setUsuario_idUsuario(int Usuario_idUsuario) {
+        this.idUsuario = Usuario_idUsuario;
     }
 
     public String getNombre() {
@@ -84,7 +95,5 @@ public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
+
 }

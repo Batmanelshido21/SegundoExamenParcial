@@ -33,7 +33,6 @@ require(['knockout', 'ojs/ojbootstrap', 'ojs/ojarraydataprovider', 'ojs/ojknocko
       self.var_lug = ko.observable();
       var idUsuario;
 
-      self.dataprovider(new ArrayDataProvider(listdocs, { keyAttributes: 'fechaInicio', implicitSort: [{ attribute: 'fechaInicio', direction: 'ascending' }] }));
 
       this.myActionFunction = function (event) {
         this.selectedMenuItem(event.target.textContent);
@@ -101,14 +100,16 @@ require(['knockout', 'ojs/ojbootstrap', 'ojs/ojarraydataprovider', 'ojs/ojknocko
 
       function registrarEvento(){
         var request = new XMLHttpRequest();
-        var peticion = "descripcion=" + self.var_des() + "&fechaInicio" + self.var_feI() + "&fechaTermino=" + self.var_feT() + "&lugar=" + self.var_lug() + "&Usuario_idUsuario=" + idUsuario;
+        alert();
+        var peticion = "descripcion=" + self.var_des() + "&fechaInicio=" + self.var_feI()+" 10:10:10"+ "&fechaTermino=" + self.var_feT()+" 10:10:10"+ "&lugar=" + self.var_lug() + "&Usuario_idUsuario=" + idUsuario;
         request.open('POST', "http://localhost:8080/ExamenSegundoParcial/webresources/eventos/registroEvento", true);
         request.timeout = 6000; //milliseconds
         request.withCredentials = true;
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        alert(request.status);
         request.onload = function () {
+          alert(peticion);
           alert(request.status);
+          alert(peticion);
           if (request.status >= 200 && request.status < 300) {
 
             var data = JSON.parse(this.response);
@@ -162,6 +163,7 @@ require(['knockout', 'ojs/ojbootstrap', 'ojs/ojarraydataprovider', 'ojs/ojknocko
             var data = JSON.parse(this.response);
 
             fun(data.usuario_idUsuario);
+            idUsuario=data.usuario_idUsuario;
 
           } else {
             alert("No se puede conectar al servidor...");

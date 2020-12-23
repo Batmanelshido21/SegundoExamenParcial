@@ -30,13 +30,16 @@ public class Evento {
     public Evento() {
     }
 
-    public Evento(String descripcion, Timestamp fechaInicio, Timestamp fechaTermino, String Lugar, Integer Usuario_idUsuario) {
+    public Evento(String descripcion, Timestamp fechaInicio, Timestamp fechaTermino, String Lugar, Integer Usuario_idUsuario, Integer idEvento) {
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
         this.fechaTermino = fechaTermino;
         this.Lugar = Lugar;
         this.Usuario_idUsuario = Usuario_idUsuario;
+        this.idEvento = idEvento;
     }
+
+
 
     public Integer getIdEvento() {
         return idEvento;
